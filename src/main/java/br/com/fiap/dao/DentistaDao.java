@@ -20,7 +20,7 @@ public class DentistaDao {
     // Inserir / Insert
     public String inserir(Dentista dentista) throws SQLException {
         PreparedStatement stmt = minhaConexao.prepareStatement(
-                "INSERT INTO T_FIAP_DENTISTA (CRO, NOME, CIDADE, CONTATO, ESPECIALIDADE, ENDERECO) VALUES (?, ?, ?, ?, ?, ?)"
+                "INSERT INTO T_TDB_DENTISTA (CRO, NOME, CIDADE, CONTATO, ESPECIALIDADE, ENDERECO) VALUES (?, ?, ?, ?, ?, ?)"
         );
         stmt.setString(1, dentista.getCro());
         stmt.setString(2, dentista.getNome());
@@ -49,7 +49,7 @@ public class DentistaDao {
     // Update / Atualizar
     public String atualizar(Dentista dentista) throws SQLException {
         PreparedStatement stmt = minhaConexao.prepareStatement(
-                "UPDATE T_FIAP_DENTISTA SET NOME = ?, CIDADE = ?, CONTATO = ?, ESPECIALIDADE = ?, ENDERECO = ? WHERE CRO = ?"
+                "UPDATE T_TDB_DENTISTA SET NOME = ?, CIDADE = ?, CONTATO = ?, ESPECIALIDADE = ?, ENDERECO = ? WHERE CRO = ?"
         );
         stmt.setString(1, dentista.getNome());
         stmt.setString(2, dentista.getCidade());
@@ -67,7 +67,7 @@ public class DentistaDao {
     // Select All
     public ArrayList<Dentista> selecionar() throws SQLException {
         ArrayList<Dentista> listaDentista = new ArrayList<Dentista>();
-        PreparedStatement stmt = minhaConexao.prepareStatement("SELECT * FROM T_FIAP_DENTISTA");
+        PreparedStatement stmt = minhaConexao.prepareStatement("SELECT * FROM T_TDB_DENTISTA");
 
         ResultSet rs = stmt.executeQuery();
 
@@ -89,7 +89,7 @@ public class DentistaDao {
 
     public Dentista selecionarPorCro(String cro) throws SQLException {
         Dentista objDentista = null;
-        PreparedStatement stmt = minhaConexao.prepareStatement("SELECT * FROM T_FIAP_DENTISTA WHERE CRO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("SELECT * FROM T_TDB_DENTISTA WHERE CRO = ?");
         stmt.setString(1, cro);
 
         ResultSet rs = stmt.executeQuery();
