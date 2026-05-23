@@ -2,7 +2,6 @@
 # ESTÁGIO 1: Compilação da aplicação (Build)
 # ==========================================
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-
 # Define o diretório de trabalho dentro do container de build
 WORKDIR /build
 
@@ -10,12 +9,11 @@ WORKDIR /build
 COPY pom.xml .
 
 # Copia a pasta com o código fonte do Java completo
-COPY src ./src
+COPY . .
 
 # CORRIGIDO: Usamos "mvn" direto em vez de "./mvnw"
 # Isso elimina a necessidade do comando "chmod +x mvnw"
 RUN mvn package -Dquarkus.package.type=fast-jar -DskipTests
-
 # ==========================================
 # ESTÁGIO 2: Imagem final de execução (Runtime)
 # ==========================================
