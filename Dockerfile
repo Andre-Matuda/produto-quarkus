@@ -6,7 +6,6 @@ FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /build
 
 # Copia o arquivo de configuração do Maven (pom.xml)
-COPY pom.xml .
 
 # Copia a pasta com o código fonte do Java completo
 COPY . .
