@@ -2,17 +2,19 @@
 # ESTÁGIO 1: Compilação da aplicação (Build)
 # ==========================================
 FROM maven:3.9.6-eclipse-temurin-21 AS build
+
 # Define o diretório de trabalho dentro do container de build
 WORKDIR /build
 
-# Copia o arquivo de configuração do Maven (pom.xml)
+# 1. Copia o pom.xml da raiz do seu GitHub para dentro do /build do container
+COPY pom.xml .
 
-# Copia a pasta com o código fonte do Java completo
-COPY . .
+# 2. Copia a pasta src do seu GitHub para dentro do /build do container
+COPY src ./src
 
-# CORRIGIDO: Usamos "mvn" direto em vez de "./mvnw"
-# Isso elimina a necessidade do comando "chmod +x mvnw"
+# 3. Agora que os arquivos existem ali dentro, o Maven vai funcionar!
 RUN mvn package -Dquarkus.package.type=fast-jar -DskipTests
+
 # ==========================================
 # ESTÁGIO 2: Imagem final de execução (Runtime)
 # ==========================================
