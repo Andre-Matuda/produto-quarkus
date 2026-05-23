@@ -16,6 +16,7 @@
         <quarkus.platform.version>3.34.6</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
+        <argLine>-Dfile.encoding=UTF-8</argLine>
     </properties>
 
     <dependencyManagement>
@@ -53,13 +54,11 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--  https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient  -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.14</version>
         </dependency>
-        <!--  https://mvnrepository.com/artifact/com.google.code.gson/gson  -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -90,7 +89,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>@{argLine}</argLine>
+                    <argLine>${argLine}</argLine>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
@@ -100,6 +99,14 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <argLine>${argLine}</argLine>
+                    <systemPropertyVariables>
+                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -108,14 +115,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <argLine>@{argLine}</argLine>
-                    <systemPropertyVariables>
-                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                        <maven.home>${maven.home}</maven.home>
-                    </systemPropertyVariables>
-                </configuration>
             </plugin>
         </plugins>
     </build>
